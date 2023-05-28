@@ -8,6 +8,9 @@ import com.example.deposits.repository.DepositsRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Tag(
+        name= "Deposit Service - DepositsController",
+        description = "DepositsController Exposes REST APIs for Deposits Service"
+)
 public class DepositsController {
 
     private Logger logger = LoggerFactory.getLogger(DepositsController.class);
@@ -29,6 +36,15 @@ public class DepositsController {
     @Autowired
     DepositsServiceConfig config;
 
+
+    @Operation(
+            summary = "Get Deposits REST API",
+            description = "Get Deposits REST API is used to get deposits details"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP Status 201 Created"
+    )
     @PostMapping("/myDeposits")
     public List<Deposits> getAllDeposits(@RequestBody Customer customer){
         logger.info("/myDeposits inside DepositsController started");
@@ -40,6 +56,14 @@ public class DepositsController {
         return null;
     }
 
+    @Operation(
+            summary = "Get Deposits Properties REST API",
+            description = "Get Deposits related Properties REST API"
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "HTTP Status 201 Created"
+    )
     @GetMapping("/myDeposits/properties")
     public String getPropertyDetails() throws JsonProcessingException {
         logger.info("/myDeposits/properties DepositsController started");
